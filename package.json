@@ -1,0 +1,77 @@
+{
+  "name": "zotero-live-cite",
+  "displayName": "Zotero Live Cite",
+  "description": "Autocomplete \\cite{} keys straight from your running Zotero library, and add each chosen reference to your .bib file.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justachetan/zotero-live-cite.git"
+  },
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "zotero",
+    "latex",
+    "bibtex",
+    "citation"
+  ],
+  "activationEvents": [
+    "onLanguage:latex",
+    "onLanguage:tex"
+  ],
+  "main": "./out/src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "zoteroLiveCite.selectCollection",
+        "title": "Zotero Live Cite: Select Collection to Search"
+      }
+    ],
+    "configuration": {
+      "title": "Zotero Live Cite",
+      "properties": {
+        "zoteroLiveCite.libraryUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:23119/api/users/0",
+          "scope": "resource",
+          "markdownDescription": "Zotero local API URL of the library to search. The default is your personal library; use `http://127.0.0.1:23119/api/groups/<groupID>` for a group library."
+        },
+        "zoteroLiveCite.collection": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "markdownDescription": "Zotero collection to search, with its subcollections. Accepts a name (`Thesis`), a path (`Reading List/Transformers`) or a collection key. Leave empty to search the whole library. Set it with **Zotero Live Cite: Select Collection to Search**."
+        },
+        "zoteroLiveCite.bibFile": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "markdownDescription": "`.bib` file that chosen references are added to, relative to the workspace folder. Leave empty to use the workspace's only `.bib` file (you are asked once if there are several)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "test": "npm run compile && node --test \"out/test/unit/**/*.test.js\"",
+    "test:vscode": "npm run compile && node out/test/vscode/runTests.js",
+    "smoke": "npm run compile && node out/test/live/smoke.js",
+    "package": "npm run compile && vsce package",
+    "demo": "npm run compile && node out/test/demo/record.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "~1.99.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.1.0",
+    "typescript": "^7.0.2"
+  }
+}
